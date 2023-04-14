@@ -47,12 +47,12 @@ class DirectMessage(Message):
         sender = db.relationship(
             "User", 
             foreign_keys=[user_id],
-            primaryjoin="User.id == DirectMessage.user_id",     
+            primaryjoin="DirectMessage.user_id  == User.id",     
             back_populates="dms")
         recipient = db.relationship(
             "User", 
             foreign_keys=[recipient_id],
-             primaryjoin="User.id == DirectMessage.recipient_id",  
+            primaryjoin="DirectMessage.recipient_id == User.id",  
             back_populates="dms")
     
     else:
@@ -111,7 +111,19 @@ class ChannelMessage(Message):
     channel_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod("channels.id")), nullable=False)
 
-    sender = db.relationship("User", back_populates='channel_messages')
+
+    if environment == 'production':
+        sender = db.relationship(
+            "User", 
+            primaryjoin="ChannelMessage.user_id == User.id",
+            back_populates='channel_messages'
+        )
+    else: 
+        sender = db.relationship(
+            "User", 
+            back_populates='channel_messages'
+        )
+        
     channel = db.relationship("Channel", back_populates="channel_messages")
 
     @classmethod  # seeder method
