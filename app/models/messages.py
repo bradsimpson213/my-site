@@ -1,7 +1,7 @@
 from operator import add
 from app.models import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-
+from .user import User
 
 class Message(db.Model):
     __abstract__ = True
@@ -46,11 +46,11 @@ class DirectMessage(Message):
     if environment == 'production':
         sender = db.relationship(
             "User", 
-            foreign_keys=user_id,     
+            foreign_keys=[user_id, User.id],     
             back_populates="dms")
         recipient = db.relationship(
             "User", 
-            foreign_keys=recipient_id,
+            foreign_keys=[recipient_id, User.id],
             back_populates="dms")
     
     else:
