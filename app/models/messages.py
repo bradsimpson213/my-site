@@ -95,8 +95,7 @@ class DirectMessage(Message):
         return f"Direct message from user {self.user_id} to user {self.recipient_id}: {self.content}"
 
 
-if environment == "production":
-    DirectMessage.schema = SCHEMA
+
 
 
 class ChannelMessage(Message):
