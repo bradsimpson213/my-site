@@ -2,7 +2,7 @@ from app.models import db, environment, SCHEMA, add_prefix_for_prod, DirectMessa
 from .server import server_memberships
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from .messages import DirectMessage
+
 
 friends = db.Table(
     "friends",
@@ -66,7 +66,9 @@ class User(db.Model, UserMixin):
         )
 
     channel_messages = db.relationship(
-        "ChannelMessage", back_populates='sender')
+        "ChannelMessage", 
+        primaryjoin=ChannelMessage.user_id == id,
+        back_populates='sender')
 
     friends = db.relationship(
         "User",
