@@ -43,10 +43,27 @@ class DirectMessage(Message):
     user_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod("users.id")), nullable=False)
 
-    sender = db.relationship(
-        "User", foreign_keys=[user_id], back_populates="dms")
-    recipient = db.relationship(
-        "User", foreign_keys=[recipient_id], back_populates="dms")
+    if environment == 'production':
+        sender = db.relationship(
+            "User", 
+            foreign_keys=[user_id],     
+            secondary=f'{SCHEMA}.users',
+            back_populates="dms")
+        recipient = db.relationship(
+            "User", 
+            foreign_keys=[recipient_id],
+            secondary=f'{SCHEMA}.users', 
+            back_populates="dms")
+    
+    else:
+        sender = db.relationship(
+            "User", 
+            foreign_keys=[user_id],     
+            back_populates="dms")
+        recipient = db.relationship(
+            "User", 
+            foreign_keys=[recipient_id],
+            back_populates="dms")
 
     def to_safe_dict(self):
         return {
