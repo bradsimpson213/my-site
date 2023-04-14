@@ -47,12 +47,12 @@ class DirectMessage(Message):
         sender = db.relationship(
             "User", 
             foreign_keys=[user_id],     
-            secondary=f'{SCHEMA}.users',
+            primaryjoin=f'{SCHEMA}.users',
             back_populates="dms")
         recipient = db.relationship(
             "User", 
             foreign_keys=[recipient_id],
-            secondary=f'{SCHEMA}.users', 
+            primaryjoin=f'{SCHEMA}.users', 
             back_populates="dms")
     
     else:
