@@ -34,12 +34,8 @@ class DirectMessage(Message):
     __tablename__ = 'direct_messages'
 
     if environment == "production":
-        __table_args__ = ({'schema': SCHEMA},
-        db.ForeignKeyConstraint(
-            ["user_id", "recipient_id"], ["users.id", "users.id"]
-        ),
-        )
-
+        __table_args__ = {'schema': SCHEMA},
+  
     id = db.Column(db.Integer, primary_key=True)
     recipient_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod("users.id")),  nullable=False)
@@ -66,6 +62,7 @@ class DirectMessage(Message):
             "User", 
             foreign_keys=[recipient_id],
             back_populates="dms")
+            
 
     def to_safe_dict(self):
         return {
