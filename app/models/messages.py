@@ -35,7 +35,7 @@ class DirectMessage(Message):
 
     if environment == "production":
         __table_args__ = ({'schema': SCHEMA},
-        ForeignKeyConstraint(
+        db.ForeignKeyConstraint(
             ["user_id", "recipient_id"], ["users.id", "users.id"]
         ),
         )
