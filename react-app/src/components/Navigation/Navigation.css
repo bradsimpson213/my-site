@@ -1,0 +1,13 @@
+.profile-dropdown {
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
+
+#home img {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
