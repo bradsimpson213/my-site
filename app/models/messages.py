@@ -118,12 +118,13 @@ class ChannelMessage(Message):
             primaryjoin="ChannelMessage.user_id == User.id",
             back_populates='channel_messages'
         )
+        
     else: 
         sender = db.relationship(
             "User", 
             back_populates='channel_messages'
         )
-        
+
     channel = db.relationship("Channel", back_populates="channel_messages")
 
     @classmethod  # seeder method
