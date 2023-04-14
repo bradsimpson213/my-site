@@ -46,13 +46,11 @@ class DirectMessage(Message):
     if environment == 'production':
         sender = db.relationship(
             "User", 
-            foreign_keys=[user_id],     
-            primaryjoin=f'{SCHEMA}.users',
+            foreign_keys=user_id,     
             back_populates="dms")
         recipient = db.relationship(
             "User", 
-            foreign_keys=[recipient_id],
-            primaryjoin=f'{SCHEMA}.users', 
+            foreign_keys=recipient_id,
             back_populates="dms")
     
     else:
