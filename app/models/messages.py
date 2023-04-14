@@ -46,11 +46,13 @@ class DirectMessage(Message):
     if environment == 'production':
         sender = db.relationship(
             "User", 
-            foreign_keys=[user_id],     
+            foreign_keys=[user_id],
+            primaryjoin="User.id == DirectMessage.user_id",     
             back_populates="dms")
         recipient = db.relationship(
             "User", 
             foreign_keys=[recipient_id],
+             primaryjoin="User.id == DirectMessage.recipient_id",  
             back_populates="dms")
     
     else:
@@ -62,7 +64,7 @@ class DirectMessage(Message):
             "User", 
             foreign_keys=[recipient_id],
             back_populates="dms")
-            
+
 
     def to_safe_dict(self):
         return {
